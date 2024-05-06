@@ -7,7 +7,7 @@ const method = req.method;
 if(url === '/'){
 res.setHeader("Content-Type", "text/html");
 res.write('<body><form action = "/message" method = "POST"><input type = "text" name = "message"><button type = "Submit">Click</body>');
-return res.end();
+res.end();
 }
 
 if(url === '/message' && method === 'POST'){
@@ -19,16 +19,16 @@ if(url === '/message' && method === 'POST'){
 
     return req.on('end', ()=>{
     const parsebody = Buffer.concat(body).toString();
-    console.log(parsebody);
+    // console.log(parsebody);
     const message = parsebody.split('=')[1];
     fs.writeFile('message.txt', message, (err)=>{
         if(err) throw err
         res.statusCode = 302;
         res.setHeader('Location' , '/');
-        return res.end();
+      res.end();
     });
-    res.end();
    });
+  // res.end();
 }};
 
 module.exports = requsetHandler;
